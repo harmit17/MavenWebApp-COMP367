@@ -9,17 +9,17 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
-        stage('Build') {
+        stage('Docker Build') {
             steps {
                 bat 'docker build -t harmit179/jenkins-docker-hub .'
             }
         }
-        stage('Login') {
+        stage('Docker Login') {
             steps {
                 bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage('Push') {
+        stage('Docker Push image') {
             steps {
                 sh 'docker push harmit179/jenkins-docker-hub'
            }
