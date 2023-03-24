@@ -16,7 +16,9 @@ pipeline {
         }
         stage('Docker Login') {
             steps {
-                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+                }
             }
         }
         stage('Docker Push image') {
