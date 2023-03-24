@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Docker Push image') {
             steps {
-                sh 'docker push harmit179/jenkins-docker-hub'
+                bat 'docker push harmit179/jenkins-docker-hub'
            }
         }
     }
