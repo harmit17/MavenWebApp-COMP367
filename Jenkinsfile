@@ -16,9 +16,7 @@ pipeline {
         }
         stage('Docker Login') {
             steps {
-                script {
                     bat "echo ${env.DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${env.DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-                }
             }
         }
         stage('Docker Push image') {
