@@ -16,9 +16,12 @@ pipeline {
         }
         stage('Docker Login') {
             steps {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USERNAME', passwordVariable: 'DOCKERHUB_CREDENTIALS_PASSWORD')]) {
-                        bat "echo ${DOCKERHUB_CREDENTIALS_PASSWORD} | docker login --username ${DOCKERHUB_CREDENTIALS_USERNAME} --password-stdin"
-                    }
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_CREDENTIALS_USER', passwordVariable: 'DOCKERHUB_CREDENTIALS_PASSWORD')]) {
+                    bat """
+                        echo Logging in to Docker Hub...
+                        docker login --username ${DOCKERHUB_CREDENTIALS_USER} --password ${DOCKERHUB_CREDENTIALS_PASSWORD}
+                    """
+                }
             }
         }
         stage('Docker Push image') {
