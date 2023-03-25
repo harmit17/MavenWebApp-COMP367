@@ -1,26 +1,11 @@
-# Use a base image with Java 8 installed
-FROM openjdk:8-jdk-alpine
+# Use a base image with Tomcat 9 and Java 8 installed
+FROM tomcat:9.0-jdk8-openjdk
 
-# Set the working directory to /app
-WORKDIR /app
-
-# Install Maven
-RUN apk add --no-cache maven
-
-# Copy the pom.xml file to the container
-COPY pom.xml .
-
-# Download the maven dependencies
-RUN ["mvn", "dependency:go-offline"]
-
-# Copy the source code to the container
-COPY src/ ./src/
-
-# Compile and package the Java webapp
-RUN ["mvn", "clean", "package"]
+# Copy the WAR file to the Tomcat's webapps directory
+COPY target/DemoCOMP367.war /usr/local/tomcat/webapps/
 
 # Expose port 8080
 EXPOSE 8080
 
-# Start the Java webapp
-CMD ["java", "-jar", "target/DemoCOMP367.war"]
+# Start the Tomcat server
+CMD ["catalina.sh", "run"]
